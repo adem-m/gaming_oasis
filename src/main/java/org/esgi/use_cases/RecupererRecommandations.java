@@ -29,7 +29,10 @@ public class RecupererRecommandations {
             List<Jeu> jeux = new ArrayList<>();
             int page = 0;
             while (jeux.size() < NB_JEUX_RECOMMANDES_PAR_GENRE) {
-                jeux.addAll(catalogue.jeuxLesMieuxNotesParGenre(genre, NB_JEUX_RECOMMANDES_PAR_GENRE, page));
+                List<Jeu> jeuxLesMieuxNotes = catalogue.jeuxLesMieuxNotesParGenre(genre, NB_JEUX_RECOMMANDES_PAR_GENRE, page);
+                if (jeuxLesMieuxNotes.isEmpty())
+                    break;
+                jeux.addAll(jeuxLesMieuxNotes);
                 jeux = jeux.stream()
                         .filter(jeu -> !utilisateurs.jeuDejaJoue(idUtilisateur, jeu.id()))
                         .limit(10)
@@ -37,7 +40,9 @@ public class RecupererRecommandations {
                 page++;
             }
 
-            jeuxLesMieuxNotesParGenre.put(genre, jeux);
+            if (!jeux.isEmpty()) {
+                jeuxLesMieuxNotesParGenre.put(genre, jeux);
+            }
         });
 
         return new Recommendations(jeuxLesMieuxNotesParGenre);
