@@ -1,6 +1,7 @@
 package org.esgi.use_cases;
 
 import org.esgi.models.*;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -22,9 +23,16 @@ public class RecupererRecommandationsTest {
     @Mock
     private CatalogueRepository catalogue;
 
+    private Utilisateur utilisateur;
+
+    @Before
+    public void setUp() {
+        utilisateur = new Utilisateur("Adem", utilisateurs);
+        when(utilisateurs.recuperer(any(String.class))).thenReturn(utilisateur);
+    }
+
     @Test
     public void recupererRecommandationsDUnUtilisateurQuiNAJamaisJoue() {
-        Utilisateur utilisateur = new Utilisateur("Adem");
         when(catalogue.jeuxLesMieuxNotesParGenre(any(Genre.class), anyInt(), anyInt())).thenReturn(List.of(
                 new Jeu(
                         "1",
@@ -73,7 +81,7 @@ public class RecupererRecommandationsTest {
                         "1",
                         "Jeu 1 " + Genre.ACTION,
                         "Descri",
-                        List.of(new Avis("Mon avis", new Utilisateur("Adem"))),
+                        List.of(new Avis("Mon avis", utilisateur)),
                         new Prix(10.0),
                         List.of(Genre.ACTION),
                         Note.de(9)
@@ -82,7 +90,7 @@ public class RecupererRecommandationsTest {
                         "2",
                         "Jeu 2 " + Genre.ACTION,
                         "Descri",
-                        List.of(new Avis("Mon avis", new Utilisateur("Adem"))),
+                        List.of(new Avis("Mon avis", utilisateur)),
                         new Prix(10.0),
                         List.of(Genre.ACTION),
                         Note.de(9)

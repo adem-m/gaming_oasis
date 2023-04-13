@@ -2,49 +2,34 @@ package org.esgi.use_cases;
 
 import org.esgi.models.*;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class RecupererRecommandations {
-    private final static int NB_JEUX_RECOMMANDES_PAR_GENRE = 10;
     private final static int NB_GENRE_MAX = 5;
 
     private final UtilisateurRepository utilisateurs;
-    private final CatalogueRepository catalogue;
+    private final CatalogueRepository catalogueRepository;
 
-    public RecupererRecommandations(UtilisateurRepository utilisateurs, CatalogueRepository catalogue) {
+    public RecupererRecommandations(UtilisateurRepository utilisateurs, CatalogueRepository catalogueRepository) {
         this.utilisateurs = utilisateurs;
-        this.catalogue = catalogue;
+        this.catalogueRepository = catalogueRepository;
     }
 
 
     public Recommendations recuperer(String idUtilisateur) {
-        Set<Genre> genresLesPlusJoues = utilisateurs.genresLesPlusJoues(idUtilisateur);
-        if (genresLesPlusJoues.isEmpty()) {
-            genresLesPlusJoues = catalogue.genresLesPlusJoues(NB_GENRE_MAX);
-        }
+        Utilisateur utilisateur = utilisateurs.recuperer(idUtilisateur);
+        Set<Genre> genresLesPlusJouesParLUtilisateur = utilisateurs.genresLesPlusJoues(idUtilisateur);
+        Set<Genre> genresLesPlusJouesDuCatalogue = catalogueRepository.genresLesPlusJoues(NB_GENRE_MAX);
+        Catalogue catalogue = new Catalogue(catalogueRepository);
 
-        Map<Genre, List<Jeu>> jeuxLesMieuxNotesParGenre = new HashMap<>();
-        genresLesPlusJoues.forEach(genre -> {
-            List<Jeu> jeux = new ArrayList<>();
-            int page = 0;
-            while (jeux.size() < NB_JEUX_RECOMMANDES_PAR_GENRE) {
-                List<Jeu> jeuxLesMieuxNotes = catalogue.jeuxLesMieuxNotesParGenre(genre, NB_JEUX_RECOMMANDES_PAR_GENRE, page);
-                if (jeuxLesMieuxNotes.isEmpty())
-                    break;
-                jeux.addAll(jeuxLesMieuxNotes);
-                jeux = jeux.stream()
-                        .filter(jeu -> !utilisateurs.jeuDejaJoue(idUtilisateur, jeu.id()))
-                        .limit(10)
-                        .collect(Collectors.toList());
-                page++;
-            }
-
-            if (!jeux.isEmpty()) {
-                jeuxLesMieuxNotesParGenre.put(genre, jeux);
-            }
-        });
+        Set<Genre> genresLesPlusJoues =
+                utilisateur.recupererGenresLesPlusJoues(genresLesPlusJouesParLUtilisateur, genresLesPlusJouesDuCatalogue);
+        Map<Genre, List<Jeu>> jeuxLesMieuxNotesParGenre =
+                catalogue.recupererJeuxLesMieuxNotesParGenre(genresLesPlusJoues, utilisateur);
 
         return new Recommendations(jeuxLesMieuxNotesParGenre);
     }
+
 }
