@@ -1,4 +1,4 @@
-package org.esgi.models;
+package org.esgi.domain;
 
 public class Note {
     private final float valeur;

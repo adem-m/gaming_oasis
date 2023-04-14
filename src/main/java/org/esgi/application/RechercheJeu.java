@@ -1,4 +1,4 @@
-package org.esgi.use_cases;
+package org.esgi.application;
 
 public class RechercheJeu {
 }

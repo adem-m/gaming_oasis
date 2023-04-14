@@ -1,4 +1,4 @@
-package org.esgi.models;
+package org.esgi.domain;
 
 import java.util.List;
 import java.util.Set;

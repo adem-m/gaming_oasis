@@ -1,6 +1,6 @@
-package org.esgi.use_cases;
+package org.esgi.application;
 
-import org.esgi.models.*;
+import org.esgi.domain.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +21,7 @@ public class RecupererRecommandationsTest {
     private UtilisateurRepository utilisateurs;
 
     @Mock
-    private CatalogueRepository catalogue;
+    private Jeux catalogue;
 
     private Utilisateur utilisateur;
 
