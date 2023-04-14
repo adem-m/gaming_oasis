@@ -16,8 +16,8 @@ public record Utilisateur(
         return genresLesPlusJouesParLUtilisateur;
     }
 
-    private boolean aDejaJoueAuJeu(String idJeu) {
-        return utilisateurs.jeuDejaJoue(nom, idJeu);
+    private boolean aDejaJoueAuJeu(IdJeu idJeu) {
+        return utilisateurs.jeuDejaJoue(nom, idJeu.valeur());
     }
 
     public List<Jeu> recupererJeuxAuquelIlNAPasJoue(List<Jeu> jeux, int limit) {

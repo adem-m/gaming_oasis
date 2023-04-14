@@ -35,7 +35,7 @@ public class RecupererRecommandationsTest {
     public void recupererRecommandationsDUnUtilisateurQuiNAJamaisJoue() {
         when(catalogue.recupererMeilleursJeux(any(Genre.class), anyInt(), anyInt())).thenReturn(List.of(
                 new Jeu(
-                        "1",
+                        new IdJeu("1"),
                         "Jeu 1 " + Genre.ARCADE,
                         "Descri",
                         List.of(new Avis("Mon avis", utilisateur)),
@@ -44,7 +44,7 @@ public class RecupererRecommandationsTest {
                         Note.de(9)
                 ),
                 new Jeu(
-                        "2",
+                        new IdJeu("2"),
                         "Jeu 2 " + Genre.PUZZLE,
                         "Descri",
                         List.of(new Avis("Mon avis", utilisateur)),
@@ -78,7 +78,7 @@ public class RecupererRecommandationsTest {
         when(utilisateurs.genresLesPlusJoues(anyString())).thenReturn(Set.of(Genre.ACTION));
         when(catalogue.recupererMeilleursJeux(any(Genre.class), anyInt(), anyInt())).thenReturn(List.of(
                 new Jeu(
-                        "1",
+                        new IdJeu("1"),
                         "Jeu 1 " + Genre.ACTION,
                         "Descri",
                         List.of(new Avis("Mon avis", utilisateur)),
@@ -87,7 +87,7 @@ public class RecupererRecommandationsTest {
                         Note.de(9)
                 ),
                 new Jeu(
-                        "2",
+                        new IdJeu("2"),
                         "Jeu 2 " + Genre.ACTION,
                         "Descri",
                         List.of(new Avis("Mon avis", utilisateur)),
