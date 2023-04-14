@@ -24,10 +24,10 @@ public class RecupererRecommandations {
         Set<Genre> genresLesPlusJouesDuCatalogue = jeux.genresLesPlusJoues(NB_GENRE_MAX);
         Catalogue catalogue = new Catalogue(jeux);
 
-        Set<Genre> genresLesPlusJoues =
-                utilisateur.recupererGenresLesPlusJoues(genresLesPlusJouesParLUtilisateur, genresLesPlusJouesDuCatalogue);
+        Set<Genre> genres =
+                utilisateur.recupererGenres(genresLesPlusJouesParLUtilisateur, genresLesPlusJouesDuCatalogue);
         Map<Genre, List<Jeu>> jeuxLesMieuxNotesParGenre =
-                catalogue.recupererJeuxLesMieuxNotesParGenre(genresLesPlusJoues, utilisateur);
+                catalogue.recupererRecommandations(genres, utilisateur);
 
         return new Recommendations(jeuxLesMieuxNotesParGenre);
     }

@@ -8,8 +8,8 @@ public record Utilisateur(
         String nom,
         UtilisateurRepository utilisateurs
 ) {
-    public Set<Genre> recupererGenresLesPlusJoues(Set<Genre> genresLesPlusJouesParLUtilisateur,
-                                                  Set<Genre> genresLesPlusJouesDuCatalogue) {
+    public Set<Genre> recupererGenres(Set<Genre> genresLesPlusJouesParLUtilisateur,
+                                      Set<Genre> genresLesPlusJouesDuCatalogue) {
         if (genresLesPlusJouesParLUtilisateur.isEmpty()) {
             return genresLesPlusJouesDuCatalogue;
         }

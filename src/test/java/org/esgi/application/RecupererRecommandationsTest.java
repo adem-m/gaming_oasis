@@ -33,7 +33,7 @@ public class RecupererRecommandationsTest {
 
     @Test
     public void recupererRecommandationsDUnUtilisateurQuiNAJamaisJoue() {
-        when(catalogue.jeuxLesMieuxNotesParGenre(any(Genre.class), anyInt(), anyInt())).thenReturn(List.of(
+        when(catalogue.recupererMeilleursJeux(any(Genre.class), anyInt(), anyInt())).thenReturn(List.of(
                 new Jeu(
                         "1",
                         "Jeu 1 " + Genre.ARCADE,
@@ -76,7 +76,7 @@ public class RecupererRecommandationsTest {
     @Test
     public void recupererRecommandationsDUnUtilisateurQuiADejaJoueADesJeuxDAction() {
         when(utilisateurs.genresLesPlusJoues(anyString())).thenReturn(Set.of(Genre.ACTION));
-        when(catalogue.jeuxLesMieuxNotesParGenre(any(Genre.class), anyInt(), anyInt())).thenReturn(List.of(
+        when(catalogue.recupererMeilleursJeux(any(Genre.class), anyInt(), anyInt())).thenReturn(List.of(
                 new Jeu(
                         "1",
                         "Jeu 1 " + Genre.ACTION,
@@ -107,7 +107,7 @@ public class RecupererRecommandationsTest {
     @Test
     public void recupererRecommandationsDUnUtilisateurQuiADejaJoueADesJeuxDActionAvecUnCatalogueVide() {
         when(utilisateurs.genresLesPlusJoues(anyString())).thenReturn(Set.of(Genre.ACTION));
-        when(catalogue.jeuxLesMieuxNotesParGenre(any(Genre.class), anyInt(), anyInt())).thenReturn(List.of());
+        when(catalogue.recupererMeilleursJeux(any(Genre.class), anyInt(), anyInt())).thenReturn(List.of());
         RecupererRecommandations recupererRecommandations = new RecupererRecommandations(utilisateurs, catalogue);
         Recommendations recommendations = recupererRecommandations.recuperer("toto");
         Map<Genre, List<Jeu>> jeux = recommendations.jeux();

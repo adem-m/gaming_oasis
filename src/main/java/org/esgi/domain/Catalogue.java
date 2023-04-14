@@ -1,6 +1,9 @@
 package org.esgi.domain;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Catalogue {
     private final static int NB_JEUX_RECOMMANDES_PAR_GENRE = 10;
@@ -11,23 +14,27 @@ public class Catalogue {
         this.jeux = jeux;
     }
 
-    public Map<Genre, List<Jeu>> recupererJeuxLesMieuxNotesParGenre(Set<Genre> genres, Utilisateur utilisateur) {
-        Map<Genre, List<Jeu>> jeuxLesMieuxNotesParGenre = new HashMap<>();
+    public Map<Genre, List<Jeu>> recupererRecommandations(Set<Genre> genres, Utilisateur utilisateur) {
+        Map<Genre, List<Jeu>> recommandations = new HashMap<>();
         genres.forEach(genre -> {
-            List<Jeu> jeuxDuGenre = new ArrayList<>();
-            int page = 0;
-            while (jeuxDuGenre.size() < NB_JEUX_RECOMMANDES_PAR_GENRE) {
-                List<Jeu> jeuxLesMieuxNotes = jeux.jeuxLesMieuxNotesParGenre(genre, NB_JEUX_RECOMMANDES_PAR_GENRE, page);
-                if (jeuxLesMieuxNotes.isEmpty())
-                    break;
-                jeuxDuGenre.addAll(jeuxLesMieuxNotes);
-                jeuxDuGenre = utilisateur.recupererJeuxAuquelIlNAPasJoue(jeuxDuGenre, NB_JEUX_RECOMMANDES_PAR_GENRE);
-                page++;
-            }
-            if (!jeuxDuGenre.isEmpty()) {
-                jeuxLesMieuxNotesParGenre.put(genre, jeuxDuGenre);
+            Recommandation recommandation = recupererMeilleursJeux(genre, utilisateur);
+            if (!recommandation.jeux().isEmpty()) {
+                recommandations.put(genre, recommandation.jeux());
             }
         });
-        return jeuxLesMieuxNotesParGenre;
+        return recommandations;
+    }
+
+    private Recommandation recupererMeilleursJeux(Genre genre, Utilisateur utilisateur) {
+        Recommandation recommandation = Recommandation.vide();
+        int page = 0;
+        while (recommandation.estIncomplete()) {
+            List<Jeu> meilleursJeux = jeux.recupererMeilleursJeux(genre, NB_JEUX_RECOMMANDES_PAR_GENRE, page);
+            if (meilleursJeux.isEmpty())
+                break;
+            recommandation.ajouter(meilleursJeux, utilisateur);
+            page++;
+        }
+        return recommandation;
     }
 }

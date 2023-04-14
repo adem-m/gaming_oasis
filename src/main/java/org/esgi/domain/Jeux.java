@@ -6,5 +6,5 @@ import java.util.Set;
 public interface Jeux {
     Set<Genre> genresLesPlusJoues(int nbGenreMax);
 
-    List<Jeu> jeuxLesMieuxNotesParGenre(Genre genre, int nbJeuxRecommandesParGenre, int page);
+    List<Jeu> recupererMeilleursJeux(Genre genre, int nbJeuxRecommandesParGenre, int page);
 }
