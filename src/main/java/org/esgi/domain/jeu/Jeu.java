@@ -30,10 +30,6 @@ public final class Jeu {
         this.note = note;
     }
 
-    public IdJeu id() {
-        return id;
-    }
-
     @Override
     public boolean equals(Object obj) {
         if (obj == this) return true;

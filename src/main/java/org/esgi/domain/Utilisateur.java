@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public record Utilisateur(
         String nom,
-        Utilisateurs utilisateurs
+        List<Jeu> jeuxJoues
 ) {
     public Set<Genre> recupererGenres(Set<Genre> genresLesPlusJouesParLUtilisateur,
                                       Set<Genre> genresLesPlusJouesDuCatalogue) {
@@ -20,13 +20,13 @@ public record Utilisateur(
         return genresLesPlusJouesParLUtilisateur;
     }
 
-    private boolean aDejaJoueAuJeu(IdJeu idJeu) {
-        return utilisateurs.jeuDejaJoue(nom, idJeu.valeur());
+    private boolean aDejaJoueAuJeu(Jeu jeu) {
+        return jeuxJoues.contains(jeu);
     }
 
     public List<Jeu> recupererJeuxAuquelIlNAPasJoue(List<Jeu> jeux, int limit) {
         return jeux.stream()
-                .filter(jeu -> !aDejaJoueAuJeu(jeu.id()))
+                .filter(jeu -> !aDejaJoueAuJeu(jeu))
                 .limit(limit)
                 .collect(Collectors.toList());
     }
