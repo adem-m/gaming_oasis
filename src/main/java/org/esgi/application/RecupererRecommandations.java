@@ -9,8 +9,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class RecupererRecommandations {
-    private final static int NB_GENRE_MAX = 5;
-
     private final Utilisateurs utilisateurs;
     private final Jeux jeux;
 
@@ -23,7 +21,7 @@ public class RecupererRecommandations {
     public Recommendations recuperer(String idUtilisateur) {
         Utilisateur utilisateur = utilisateurs.recuperer(idUtilisateur);
         Set<Genre> genresLesPlusJouesParLUtilisateur = utilisateurs.genresLesPlusJoues(idUtilisateur);
-        Set<Genre> genresLesPlusJouesDuCatalogue = jeux.genresLesPlusJoues(NB_GENRE_MAX);
+        Set<Genre> genresLesPlusJouesDuCatalogue = jeux.genresLesPlusJoues();
         Catalogue catalogue = new Catalogue(jeux);
 
         Set<Genre> genres =

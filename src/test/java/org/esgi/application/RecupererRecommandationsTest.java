@@ -44,7 +44,7 @@ public class RecupererRecommandationsTest {
         when(catalogue.recupererMeilleursJeux(eq(Genre.RPG), anyInt(), anyInt())).thenReturn(testData.JEUX_RPG);
 
         when(utilisateurs.genresLesPlusJoues("toto")).thenReturn(Set.of());
-        when(catalogue.genresLesPlusJoues(anyInt())).thenReturn(Set.of(Genre.AVENTURE, Genre.RPG));
+        when(catalogue.genresLesPlusJoues()).thenReturn(Set.of(Genre.AVENTURE, Genre.RPG));
         RecupererRecommandations recupererRecommandations = new RecupererRecommandations(utilisateurs, catalogue);
         Recommendations recommendations = recupererRecommandations.recuperer("toto");
         Map<Genre, List<Jeu>> jeux = recommendations.jeux();
