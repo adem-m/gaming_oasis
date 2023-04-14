@@ -1,4 +1,4 @@
-package org.esgi.domain;
+package org.esgi.domain.jeu;
 
 public class Note {
     private final float valeur;

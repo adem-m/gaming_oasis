@@ -1,5 +1,6 @@
 package org.esgi.domain;
 
+import org.esgi.domain.jeu.Note;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

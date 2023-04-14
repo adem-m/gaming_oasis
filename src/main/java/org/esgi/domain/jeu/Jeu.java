@@ -1,4 +1,4 @@
-package org.esgi.domain;
+package org.esgi.domain.jeu;
 
 import java.util.List;
 import java.util.Objects;

@@ -1,5 +1,9 @@
 package org.esgi.domain;
 
+import org.esgi.domain.jeu.IdJeu;
+import org.esgi.domain.jeu.Jeu;
+import org.esgi.domain.jeu.Note;
+import org.esgi.domain.jeu.Prix;
 import org.junit.Test;
 
 import java.util.List;

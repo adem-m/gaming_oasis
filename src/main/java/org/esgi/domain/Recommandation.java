@@ -1,5 +1,7 @@
 package org.esgi.domain;
 
+import org.esgi.domain.jeu.Jeu;
+
 import java.util.ArrayList;
 import java.util.List;
 

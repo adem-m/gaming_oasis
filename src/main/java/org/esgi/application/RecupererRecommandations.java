@@ -1,6 +1,8 @@
 package org.esgi.application;
 
 import org.esgi.domain.*;
+import org.esgi.domain.jeu.Genre;
+import org.esgi.domain.jeu.Jeu;
 
 import java.util.List;
 import java.util.Map;
@@ -9,10 +11,10 @@ import java.util.Set;
 public class RecupererRecommandations {
     private final static int NB_GENRE_MAX = 5;
 
-    private final UtilisateurRepository utilisateurs;
+    private final Utilisateurs utilisateurs;
     private final Jeux jeux;
 
-    public RecupererRecommandations(UtilisateurRepository utilisateurs, Jeux jeux) {
+    public RecupererRecommandations(Utilisateurs utilisateurs, Jeux jeux) {
         this.utilisateurs = utilisateurs;
         this.jeux = jeux;
     }

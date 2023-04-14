@@ -1,6 +1,7 @@
 package org.esgi.application;
 
 import org.esgi.domain.*;
+import org.esgi.domain.jeu.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +19,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RecupererRecommandationsTest {
     @Mock
-    private UtilisateurRepository utilisateurs;
+    private Utilisateurs utilisateurs;
 
     @Mock
     private Jeux catalogue;
