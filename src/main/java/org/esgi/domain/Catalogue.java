@@ -17,7 +17,7 @@ public class Catalogue {
     public Map<Genre, List<Jeu>> recupererRecommandations(Set<Genre> genres, Utilisateur utilisateur) {
         Map<Genre, List<Jeu>> recommandations = new HashMap<>();
         genres.forEach(genre -> {
-            Recommandation recommandation = recupererMeilleursJeux(genre, utilisateur);
+            Recommandation recommandation = recupererMeilleursJeuxParPage(genre, utilisateur, Recommandation.vide(), 0);
             if (!recommandation.jeux().isEmpty()) {
                 recommandations.put(genre, recommandation.jeux());
             }
@@ -25,15 +25,18 @@ public class Catalogue {
         return recommandations;
     }
 
-    private Recommandation recupererMeilleursJeux(Genre genre, Utilisateur utilisateur) {
-        Recommandation recommandation = Recommandation.vide();
-        int page = 0;
-        while (recommandation.estIncomplete()) {
-            List<Jeu> meilleursJeux = jeux.recupererMeilleursJeux(genre, NB_JEUX_RECOMMANDES_PAR_GENRE, page);
-            if (meilleursJeux.isEmpty())
-                break;
-            recommandation.ajouter(meilleursJeux, utilisateur);
-            page++;
+    private Recommandation recupererMeilleursJeuxParPage(Genre genre, Utilisateur utilisateur, Recommandation recommandation, int page) {
+        List<Jeu> meilleursJeux = jeux.recupererMeilleursJeux(genre, NB_JEUX_RECOMMANDES_PAR_GENRE, page);
+        if (meilleursJeux.isEmpty())
+            return recommandation;
+
+        List<Jeu> meilleursJeuxNonJoues =
+                utilisateur.recupererJeuxAuquelIlNAPasJoue(meilleursJeux);
+
+        recommandation.ajouter(meilleursJeuxNonJoues);
+
+        if (recommandation.estIncomplete()) {
+            return recupererMeilleursJeuxParPage(genre, utilisateur, recommandation, page + 1);
         }
         return recommandation;
     }

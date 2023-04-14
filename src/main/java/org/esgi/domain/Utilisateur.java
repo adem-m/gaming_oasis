@@ -20,10 +20,9 @@ public record Utilisateur(
         return utilisateurs.jeuDejaJoue(nom, idJeu);
     }
 
-    public List<Jeu> recupererJeuxAuquelIlNAPasJoue(List<Jeu> jeux, int limit) {
+    public List<Jeu> recupererJeuxAuquelIlNAPasJoue(List<Jeu> jeux) {
         return jeux.stream()
                 .filter(jeu -> !aDejaJoueAuJeu(jeu.id()))
-                .limit(limit)
                 .collect(Collectors.toList());
     }
 }

@@ -24,14 +24,11 @@ public class Recommandation {
         return jeux.size() < NB_JEUX_RECOMMANDES;
     }
 
-    public void ajouter(List<Jeu> jeux, Utilisateur utilisateur) {
+    public void ajouter(List<Jeu> jeux) {
         this.jeux.addAll(jeux);
-        retirerJeuxDejaJoues(utilisateur);
+        if (this.jeux.size() > NB_JEUX_RECOMMANDES) {
+            this.jeux.subList(NB_JEUX_RECOMMANDES, this.jeux.size()).clear();
+        }
     }
 
-    private void retirerJeuxDejaJoues(Utilisateur utilisateur) {
-        List<Jeu> jeuxNonJoues = utilisateur.recupererJeuxAuquelIlNAPasJoue(jeux, NB_JEUX_RECOMMANDES);
-        jeux.clear();
-        jeux.addAll(jeuxNonJoues);
-    }
 }

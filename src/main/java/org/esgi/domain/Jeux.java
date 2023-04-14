@@ -7,4 +7,6 @@ public interface Jeux {
     Set<Genre> genresLesPlusJoues(int nbGenreMax);
 
     List<Jeu> recupererMeilleursJeux(Genre genre, int nbJeuxRecommandesParGenre, int page);
+
+    List<Jeu> recupererJeuxDejaJoues(Utilisateur utilisateur);
 }
